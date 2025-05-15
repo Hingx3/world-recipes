@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playpen+Sans&display=swap" rel="stylesheet">
+  <title><%= meal.strMeal %> - Details</title>
+</head>
+<body>
+</div>
+  <h2><%= meal.strMeal %></h2>
+  <img src="<%= meal.strMealThumb %>" width="300">
+  <p><strong>Category:</strong> <%= meal.strCategory %></p>
+  <p><strong>Area:</strong> <%= meal.strArea %></p>
+</div>
+
+<div class="meal-content">
+    <h3>Instructions</h3>
+  <% if (formattedInstructions.length > 0) { %>
+    <ol>
+        <% formattedInstructions.forEach(step => { %>
+          <li><%= step.replace(/^\d+\.\s*/, '') %></li>
+        <% }) %>
+    </ol>
+  <% } else { %>
+    <p>No step-by-step instructions available.</p>
+  <% } %>
+
+  <h3>Ingredients</h3>
+  <ul>
+    <% for (let i = 1; i <= 20; i++) {
+         const ingredient = meal[`strIngredient${i}`];
+         const measure = meal[`strMeasure${i}`];
+         if (ingredient && ingredient.trim() !== "") { %>
+      <li><%= measure %> <%= ingredient %></li>
+    <% }} %>
+  </ul>
+
+  <% if (meal.strYoutube) { %>
+    <h3>Video</h3>
+    <a href="<%= meal.strYoutube %>" target="_blank">Watch on YouTube</a>
+  <% } %>
+
+  <br><br>
+  <form action="/add" method="POST">
+    <input type="hidden" name="mealId" value="<%= meal.idMeal %>">
+    <input type="hidden" name="name" value="<%= meal.strMeal %>">
+    <input type="hidden" name="image" value="<%= meal.strMealThumb %>">
+    <button type="submit">Add to Favorites</button>
+  </form>
+
+  <br><br>
+  <a href="javascript:history.back()">Back</a>
+</div>
+  
+</body>
+</html>

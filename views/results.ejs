@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playpen+Sans&display=swap" rel="stylesheet">
+  <title>Recipes from <%= country %></title>
+</head>
+<body>
+  <h2>Recipes from <%= country %></h2>
+  <% if (meals) { %>
+    <% meals.forEach(meal => { %>
+      <div class="card">
+        <img src="<%= meal.strMealThumb %>" alt="<%= meal.strMeal %>" class="recipe-img">
+        <h3><%= meal.strMeal %></h3>
+        <form action="/add" method="POST">
+          <input type="hidden" name="mealId" value="<%= meal.idMeal %>">
+          <input type="hidden" name="name" value="<%= meal.strMeal %>">
+          <input type="hidden" name="image" value="<%= meal.strMealThumb %>">
+          <button type="submit">Add to Favorites</button>
+        </form>
+
+        <form action="/details" method="POST">
+            <input type="hidden" name="idMeal" value="<%= meal.idMeal %>">
+            <button type="submit">View Details</button>
+        </form>
+      </div>
+    <% }); %>
+  <% } else { %>
+    <p>No meals found for this country.</p>
+  <% } %>
+
+  <br><br>
+  <a href="/">Back to Search</a>
+</body>
+</html>
